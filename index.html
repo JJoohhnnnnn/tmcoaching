@@ -433,7 +433,7 @@
 
   /* ---------- Vraie carte ---------- */
   .zone-visual{padding:0 !important;}
-  #map{position:absolute; inset:0; z-index:1; background:var(--night);}
+  #map{position:absolute; inset:0; z-index:1; background:#E8EEF2;}
   .zone-visual .fallback-svg{padding:20px;}
   .leaflet-container{font-family:'Montserrat',sans-serif;}
   .tm-pin{width:16px; height:16px; border-radius:50%; background:#FF2D95; border:3px solid #fff; box-shadow:0 0 0 6px rgba(255,45,149,.25);}
@@ -637,7 +637,7 @@
       </div>
       <div class="zone-visual">
         <div id="map" aria-label="Carte de la zone d'intervention"></div>
-        <div class="map-hint" id="map-hint">Clique pour zoomer</div>
+        <div class="map-hint" id="map-hint">Choisis une ville</div>
         <svg class="fallback-svg" viewBox="0 0 100 100" role="img" aria-label="Carte des villes desservies">
           <defs>
             <linearGradient id="mapgrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#33C8FF"/><stop offset=".5" stop-color="#7A2CF0"/><stop offset="1" stop-color="#FF2D95"/></linearGradient>
@@ -859,27 +859,31 @@
     ];
     document.querySelector('.fallback-svg').style.display='none';
     const map=L.map('map',{scrollWheelZoom:false, zoomControl:true, attributionControl:true});
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',{
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',{
       maxZoom:16,
       attribution:'Fond de carte &copy; Esri, HERE, Garmin, &copy; contributeurs OpenStreetMap'
     }).addTo(map);
     const latlngs=towns.map(t=>[t[1],t[2]]);
     // zone desservie
     const icon=L.divIcon({className:'',html:'<div class="tm-pin"></div>',iconSize:[16,16],iconAnchor:[8,8]});
-    const markers=towns.map(t=>L.marker([t[1],t[2]],{icon,title:t[0]}).addTo(map)
-      .bindTooltip(t[0],{permanent:!!t[4],direction:t[3],offset:{right:[10,0],left:[-10,0],top:[0,-10],bottom:[0,10]}[t[3]],className:'tm-label'})
+    // aucun point au départ : le point d'une ville n'apparaît que quand on clique sur son nom
+    const markers=towns.map(t=>L.marker([t[1],t[2]],{icon,title:t[0]})
       .bindPopup('<strong>'+t[0]+'</strong><br>Je me déplace ici.<br><a href="#contact" style="color:#D21F8C;font-weight:700">Prendre RDV →</a>'));
+    let shown=null;
     const bounds=L.latLngBounds(latlngs).pad(0.2);
     map.fitBounds(bounds);
     const hint=document.getElementById('map-hint');
-    map.on('click focus',()=>{map.scrollWheelZoom.enable(); hint.style.opacity=0;});
+    map.on('click focus',()=>map.scrollWheelZoom.enable());
     map.on('mouseout',()=>map.scrollWheelZoom.disable());
     document.querySelectorAll('.zone-towns span[data-town]').forEach(chip=>{
       chip.addEventListener('click',()=>{
         document.querySelectorAll('.zone-towns span').forEach(c=>c.classList.remove('active'));
         chip.classList.add('active');
         const m=markers[+chip.dataset.town];
-        map.flyTo(m.getLatLng(),13,{duration:.8}); m.openPopup();
+        if(shown) map.removeLayer(shown);
+        shown=m.addTo(map); hint.style.opacity=0;
+        if(window.innerWidth<800) document.getElementById('map').scrollIntoView({behavior:'smooth',block:'center'});
+        map.flyTo(m.getLatLng(),12,{duration:.8}); m.openPopup();
       });
     });
     new ResizeObserver(()=>map.invalidateSize()).observe(document.getElementById('map'));
