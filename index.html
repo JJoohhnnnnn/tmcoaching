@@ -847,9 +847,9 @@
     ];
     document.querySelector('.fallback-svg').style.display='none';
     const map=L.map('map',{scrollWheelZoom:false, zoomControl:true, attributionControl:true});
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
-      maxZoom:18, subdomains:'abcd',
-      attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>'
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',{
+      maxZoom:16,
+      attribution:'Fond de carte &copy; Esri, HERE, Garmin, &copy; contributeurs OpenStreetMap'
     }).addTo(map);
     const latlngs=towns.map(t=>[t[1],t[2]]);
     // zone desservie
