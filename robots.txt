@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tm-coaching.github.io/sitemap.xml
