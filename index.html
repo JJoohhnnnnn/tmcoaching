@@ -227,9 +227,8 @@
   .service-card p{font-size:14.5px; color:var(--muted);}
 
   /* ---------- Pricing ---------- */
-  .pricing-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px; align-items:stretch;}
-  @media(max-width:1180px){.pricing-grid{grid-template-columns:repeat(2,1fr);}}
-  @media(max-width:700px){.pricing-grid{grid-template-columns:1fr;}}
+  .pricing-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; align-items:stretch;}
+  @media(max-width:900px){.pricing-grid{grid-template-columns:1fr;}}
   .price-card{
     background:var(--card); border-radius:var(--radius);
     padding:38px 30px; box-shadow:var(--shadow);
@@ -578,7 +577,7 @@
     <div class="section-head reveal">
       <div class="eyebrow">Formules</div>
       <h2>Un tarif simple et <span class="grad-text">transparent</span></h2>
-      <p><strong>Séance découverte : 40 €, remboursée si tu t'engages avec moi ensuite.</strong> Une question, un besoin spécifique ? La dernière case est faite pour ça.</p>
+      <p><strong>Séance découverte : 40 €, remboursée si tu t'engages avec moi ensuite.</strong> Une question ? Écris-moi via le formulaire ou sur WhatsApp.</p>
     </div>
     <div class="pricing-grid reveal">
       <div class="price-card">
@@ -607,13 +606,6 @@
           <li><span>Illimité (5 et +)</span><b>120 €</b></li>
         </ul>
         <a href="#contact" class="btn btn-secondary" data-formule="Suivi à distance — au mois">Me lancer</a>
-      </div>
-      <div class="price-card">
-        <div class="tag">Autre demande</div>
-        <div class="amount" style="font-size:34px;">Sur mesure</div>
-        <div class="per">tarif adapté à ta demande</div>
-        <p class="desc">Pack de séances, objectif précis, besoin spécifique : dis-moi tout via le formulaire.</p>
-        <a href="#contact" class="btn btn-secondary" data-formule="Autre demande">En parler</a>
       </div>
     </div>
   </div>
