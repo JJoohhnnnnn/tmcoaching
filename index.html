@@ -503,6 +503,23 @@
       background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%), rgba(51,200,255,.18), rgba(122,44,240,.12) 35%, rgba(255,45,149,.08) 55%, transparent 72%);
     }
   }
+
+  /* Lentille de verre qui suit la souris partout sur la page */
+  .glass-lens{
+    position:fixed; left:0; top:0; width:200px; height:200px; margin:-100px 0 0 -100px;
+    border-radius:50%; pointer-events:none; z-index:90; opacity:0;
+    transition:opacity .35s ease, width .25s ease, height .25s ease, margin .25s ease;
+    background:radial-gradient(circle at 32% 28%, rgba(255,255,255,.55), rgba(255,255,255,0) 42%),
+               radial-gradient(circle at 70% 78%, rgba(255,45,149,.10), transparent 55%),
+               radial-gradient(circle at 25% 75%, rgba(51,200,255,.12), transparent 55%);
+    backdrop-filter:blur(5px) saturate(190%) brightness(1.04); -webkit-backdrop-filter:blur(5px) saturate(190%) brightness(1.04);
+    -webkit-mask:radial-gradient(circle, transparent 46%, #000 66%); mask:radial-gradient(circle, transparent 46%, #000 66%);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.75), inset 0 2px 6px rgba(255,255,255,.8), inset 0 -6px 14px rgba(122,44,240,.18);
+    will-change:transform;
+  }
+  .glass-lens.on{opacity:1;}
+  .glass-lens.big{width:260px; height:260px; margin:-130px 0 0 -130px;}
+  @media(hover:none), (prefers-reduced-motion:reduce){ .glass-lens{display:none;} }
 </style>
 </head>
 <body>
@@ -971,5 +988,17 @@
   });
 </script>
 
+<div class="glass-lens" aria-hidden="true"></div>
+<script>
+(function(){
+  if(!matchMedia('(hover:hover)').matches) return;
+  var l=document.querySelector('.glass-lens'), x=0,y=0,tx=0,ty=0,raf=0;
+  function tick(){ x+=(tx-x)*.22; y+=(ty-y)*.22; l.style.transform='translate3d('+x+'px,'+y+'px,0)'; raf=(Math.abs(tx-x)+Math.abs(ty-y)>.3)?requestAnimationFrame(tick):0; }
+  document.addEventListener('mousemove',function(e){ tx=e.clientX; ty=e.clientY; if(!l.classList.contains('on')){x=tx;y=ty;} l.classList.add('on');
+    l.classList.toggle('big', !!(e.target.closest && e.target.closest('a,button,.price-card,.service-card,.faq-item,summary')));
+    if(!raf) raf=requestAnimationFrame(tick); });
+  document.addEventListener('mouseleave',function(){ l.classList.remove('on'); });
+})();
+</script>
 </body>
 </html>
