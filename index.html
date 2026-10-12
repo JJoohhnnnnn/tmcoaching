@@ -503,18 +503,6 @@
       background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%), rgba(51,200,255,.18), rgba(122,44,240,.12) 35%, rgba(255,45,149,.08) 55%, transparent 72%);
     }
   }
-
-  /* Halo dégradé qui suit la souris partout sur la page */
-  .glass-lens{
-    position:fixed; left:0; top:0; width:340px; height:340px; margin:-170px 0 0 -170px;
-    border-radius:50%; pointer-events:none; z-index:90; opacity:0;
-    transition:opacity .4s ease;
-    background:radial-gradient(circle at 40% 40%, rgba(51,200,255,.08) 0%, rgba(122,44,240,.06) 30%, rgba(255,45,149,.04) 50%, transparent 68%);
-    filter:blur(14px);
-    will-change:transform;
-  }
-  .glass-lens.on{opacity:1;}
-  @media(hover:none), (prefers-reduced-motion:reduce){ .glass-lens{display:none;} }
 </style>
 </head>
 <body>
@@ -983,16 +971,5 @@
   });
 </script>
 
-<div class="glass-lens" aria-hidden="true"></div>
-<script>
-(function(){
-  if(!matchMedia('(hover:hover)').matches) return;
-  var l=document.querySelector('.glass-lens'), x=0,y=0,tx=0,ty=0,raf=0;
-  function tick(){ x+=(tx-x)*.22; y+=(ty-y)*.22; l.style.transform='translate3d('+x+'px,'+y+'px,0)'; raf=(Math.abs(tx-x)+Math.abs(ty-y)>.3)?requestAnimationFrame(tick):0; }
-  document.addEventListener('mousemove',function(e){ tx=e.clientX; ty=e.clientY; if(!l.classList.contains('on')){x=tx;y=ty;} l.classList.add('on');
-    if(!raf) raf=requestAnimationFrame(tick); });
-  document.addEventListener('mouseleave',function(){ l.classList.remove('on'); });
-})();
-</script>
 </body>
 </html>
