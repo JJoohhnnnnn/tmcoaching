@@ -472,6 +472,63 @@
   .price-card.highlight::before{background:radial-gradient(320px circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,.12), transparent 70%);}
   .btn:hover::before, .nav-cta:hover::before, .rdv-float:hover::before, .service-card:hover::before, .price-card:hover::before, .about-card:hover::before, .zone-card:hover::before, .faq-item:hover::before{opacity:1;}
   @media(hover:none){ .btn::before, .nav-cta::before, .rdv-float::before, .service-card::before, .price-card::before, .about-card::before, .zone-card::before, .faq-item::before{display:none;} }
+
+  /* ---------- Liquid glass (fond du site inchangé) ---------- */
+  :root{
+    --glass:linear-gradient(150deg,rgba(255,255,255,.78) 0%,rgba(255,255,255,.46) 45%,rgba(255,255,255,.62) 100%);
+    --glass-edge:inset 0 1px 0 rgba(255,255,255,.95), inset 0 -1px 0 rgba(22,19,28,.05), inset 1px 0 0 rgba(255,255,255,.5), inset -1px 0 0 rgba(255,255,255,.35);
+    --glass-shadow:0 1px 2px rgba(22,19,28,.04), 0 12px 32px rgba(22,19,28,.07);
+    --glass-dark:linear-gradient(150deg,rgba(255,255,255,.12) 0%,rgba(255,255,255,.03) 50%,rgba(255,255,255,.08) 100%);
+    --glass-dark-edge:inset 0 1px 0 rgba(255,255,255,.22), inset 0 -1px 0 rgba(0,0,0,.25), inset 0 0 0 1px rgba(255,255,255,.08);
+  }
+  .service-card, .price-card:not(.highlight), .about-card, .zone-card, .faq-item, .contact-card, .testi-card, .badge{
+    background:var(--glass);
+    backdrop-filter:blur(22px) saturate(180%); -webkit-backdrop-filter:blur(22px) saturate(180%);
+    border:1px solid rgba(255,255,255,.7);
+    box-shadow:var(--glass-edge), var(--glass-shadow);
+  }
+  .faq-item[open]{border-color:rgba(122,44,240,.28);}
+  .price-card.highlight, .hero-card{
+    background-image:var(--glass-dark); background-color:var(--night);
+    box-shadow:var(--glass-dark-edge), 0 18px 40px rgba(20,16,30,.28);
+  }
+  .nav{
+    background:linear-gradient(150deg,rgba(255,255,255,.72),rgba(255,255,255,.42));
+    backdrop-filter:blur(24px) saturate(190%); -webkit-backdrop-filter:blur(24px) saturate(190%);
+    box-shadow:var(--glass-edge), var(--glass-shadow);
+  }
+  .nav-cta{box-shadow:inset 0 1px 0 rgba(255,255,255,.25), inset 0 -1px 0 rgba(0,0,0,.3);}
+  .btn-primary, .rdv-float{
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.45), inset 0 -2px 6px rgba(20,16,30,.18), 0 8px 22px rgba(122,44,240,.25);
+  }
+  .rdv-float{backdrop-filter:blur(14px) saturate(170%); -webkit-backdrop-filter:blur(14px) saturate(170%);}
+  .btn-secondary{
+    background:linear-gradient(150deg,rgba(255,255,255,.7),rgba(255,255,255,.3));
+    backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+    box-shadow:inset 0 0 0 2px var(--ink), inset 0 3px 0 rgba(255,255,255,.9);
+  }
+  .on-dark .btn-secondary{background:rgba(255,255,255,.08); box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.75), inset 0 2px 0 rgba(255,255,255,.25);}
+  .hero-photo .cap{
+    background:linear-gradient(150deg,rgba(255,255,255,.28),rgba(255,255,255,.08));
+    backdrop-filter:blur(14px) saturate(180%); -webkit-backdrop-filter:blur(14px) saturate(180%);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.45), inset 0 0 0 1px rgba(255,255,255,.2);
+    text-shadow:0 1px 2px rgba(0,0,0,.35);
+  }
+
+  /* Fond liquid glass : taches de couleur floues, fixes, sous tout le contenu */
+  body::before{
+    content:""; position:fixed; inset:-10vmax; z-index:-1; pointer-events:none;
+    background:
+      radial-gradient(38vmax 38vmax at 12% 18%, rgba(51,200,255,.30), transparent 62%),
+      radial-gradient(42vmax 42vmax at 88% 22%, rgba(122,44,240,.24), transparent 62%),
+      radial-gradient(40vmax 40vmax at 78% 82%, rgba(255,45,149,.22), transparent 62%),
+      radial-gradient(36vmax 36vmax at 18% 88%, rgba(46,75,255,.18), transparent 62%);
+    filter:blur(30px);
+    animation:glassdrift 28s ease-in-out infinite alternate;
+  }
+  @keyframes glassdrift{from{transform:translate3d(0,0,0) scale(1)} to{transform:translate3d(2vmax,-2vmax,0) scale(1.06)}}
+  @media(prefers-reduced-motion:reduce){body::before{animation:none;}}
+  .tint{background:rgba(255,255,255,.22);}
 </style>
 </head>
 <body>
