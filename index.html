@@ -449,6 +449,7 @@
   .zone-towns span.active{background:var(--ink); color:#fff; border-color:var(--ink);}
 
   /* ---------- Formulaire ---------- */
+  .field-hint{display:block; margin-top:6px; font-size:12.5px; color:var(--muted);}
   .field-row{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
   @media(max-width:520px){.field-row{grid-template-columns:1fr;}}
   .hp{position:absolute !important; left:-9999px; width:1px; height:1px; overflow:hidden;}
@@ -719,45 +720,45 @@
         <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div class="field-row">
           <div class="field">
-            <label for="name">Nom</label>
-            <input type="text" id="name" name="Nom" placeholder="Ton nom" required autocomplete="name">
+            <label for="prenom">Prénom</label>
+            <input type="text" id="prenom" name="Prénom" placeholder="Ton prénom" required autocomplete="given-name">
           </div>
+          <div class="field">
+            <label for="name">Nom</label>
+            <input type="text" id="name" name="Nom" placeholder="Ton nom" required autocomplete="family-name">
+          </div>
+        </div>
+        <div class="field-row">
           <div class="field">
             <label for="tel">Téléphone</label>
             <input type="tel" id="tel" name="Téléphone" placeholder="06 12 34 56 78" required autocomplete="tel">
           </div>
-        </div>
-        <div class="field">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" placeholder="ton@email.com" required autocomplete="email">
-        </div>
-        <div class="field-row">
           <div class="field">
-            <label for="format">Formule</label>
-            <select id="format" name="Formule">
-              <option>Séance découverte — 40€</option>
-              <option>Individuel — 40€</option>
-              <option>Duo — 70€ à deux</option>
-              <option>Suivi à distance — au mois</option>
-              <option>Autre demande</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="ville">Ville</label>
-            <input type="text" id="ville" name="Ville" placeholder="Cannes, Grasse..." list="villes">
-            <datalist id="villes"><option>Cannes</option><option>Mandelieu</option><option>Le Cannet</option><option>Pégomas</option><option>Grasse</option><option>Mougins</option><option>Antibes</option><option>Nice</option><option>Saint-Raphaël</option><option>Fréjus</option></datalist>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="ton@email.com" required autocomplete="email">
           </div>
         </div>
         <div class="field">
-          <label for="dispo">Tes disponibilités</label>
-          <input type="text" id="dispo" name="Disponibilités" placeholder="Ex : lundi et jeudi soir, samedi matin">
+          <label for="format">Formule</label>
+          <select id="format" name="Formule">
+            <option>Séance découverte — 40€</option>
+            <option>Individuel — 40€</option>
+            <option>Duo — 70€ à deux</option>
+            <option>Suivi à distance — au mois</option>
+            <option>Autre demande</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="dispo">Tes disponibilités pour un appel</label>
+          <input type="text" id="dispo" name="Disponibilités pour l'appel" placeholder="Ex : lundi après 18 h, mercredi midi" required>
+          <small class="field-hint">Je t'appelle sur ce créneau pour fixer ton rendez-vous ensemble.</small>
         </div>
         <div class="field">
           <label for="message">Message</label>
           <textarea id="message" name="Message" placeholder="Dis-m'en un peu plus sur tes objectifs..."></textarea>
         </div>
         <div class="form-status" id="form-status" role="status" aria-live="polite"></div>
-        <p class="form-note">Je te recontacte sous 24 h pour fixer le créneau.</p>
+        <p class="form-note">Sans engagement : on en parle d'abord au téléphone.</p>
         <button type="submit" class="btn btn-primary btn-submit">Demander mon RDV</button>
       </form>
     </div>
@@ -892,7 +893,7 @@
     a.addEventListener('click',()=>{
       const sel=document.getElementById('format');
       [...sel.options].forEach(o=>{ if(o.text===a.dataset.formule) sel.value=o.value; });
-      setTimeout(()=>document.getElementById('name').focus({preventScroll:true}),700);
+      setTimeout(()=>document.getElementById('prenom').focus({preventScroll:true}),700);
     });
   });
 
